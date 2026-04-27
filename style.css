@@ -1,0 +1,351 @@
+/*
+  Variaveis globais de cor e temas visuais.
+  Isso facilita alterar o visual sem editar regras espalhadas.
+*/
+:root {
+  --sky: linear-gradient(180deg, #bff3ff 0%, #89d5ff 65%, #f8fbff 100%);
+  --ground: #ccb27a;
+  --pet-main: #d4a26b;
+  --pet-shadow: #8f6233;
+  --pet-belly: #f4d2aa;
+  --pet-eye: #1d2f1d;
+  --pet-cheek: #ff9db0;
+  --cactus: #2b8f2b;
+  --panel: rgba(255, 255, 255, 0.78);
+  --text: #223;
+}
+
+/* Padrao de caixa para previsibilidade no layout. */
+* {
+  box-sizing: border-box;
+}
+
+/* Centraliza o jogo na tela e aplica o fundo geral. */
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  font-family: "Press Start 2P", cursive;
+  color: var(--text);
+  background: radial-gradient(circle at top, #d7f6ff 0%, #9be2ff 40%, #78c6ff 100%);
+  padding: clamp(10px, 2.2vw, 24px);
+}
+
+/* Cartao principal do jogo. */
+.game-shell {
+  width: min(980px, 100%);
+  background: var(--panel);
+  border: 4px solid #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.2);
+  padding: clamp(10px, 2vw, 16px);
+}
+
+/* Barra superior com pontos e recorde. */
+.hud {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  font-size: clamp(0.6rem, 2vw, 0.95rem);
+  margin-bottom: 12px;
+}
+
+/* Grade para manter jogo e painel de escolha lado a lado. */
+.play-area {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(160px, 24%);
+  gap: 14px;
+  align-items: stretch;
+}
+
+/* Janela onde os elementos do jogo se movem. */
+.game {
+  position: relative;
+  height: clamp(220px, 42vw, 340px);
+  overflow: hidden;
+  background: var(--sky);
+  border-radius: 14px;
+  border: 3px solid #ffffff;
+}
+
+/* Faixa do chao. */
+.game::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 44px;
+  background: repeating-linear-gradient(
+    90deg,
+    #d7bc7b 0,
+    #d7bc7b 26px,
+    #ceb06f 26px,
+    #ceb06f 52px
+  );
+  border-top: 4px solid #b79a60;
+}
+
+/* Nuvens decorativas do fundo. */
+.cloud {
+  position: absolute;
+  width: 56px;
+  height: 20px;
+  background: #fff;
+  border-radius: 22px;
+  opacity: 0.92;
+}
+
+/* Parte extra das nuvens para forma arredondada. */
+.cloud::before,
+.cloud::after {
+  content: "";
+  position: absolute;
+  background: #fff;
+  border-radius: 50%;
+}
+
+/* Peca maior da nuvem. */
+.cloud::before {
+  width: 24px;
+  height: 24px;
+  top: -12px;
+  left: 10px;
+}
+
+/* Peca menor da nuvem. */
+.cloud::after {
+  width: 18px;
+  height: 18px;
+  top: -7px;
+  right: 9px;
+}
+
+/* Primeira nuvem. */
+.cloud-1 {
+  top: 50px;
+  left: 65%;
+  animation: drift 9s linear infinite;
+}
+
+/* Segunda nuvem. */
+.cloud-2 {
+  top: 92px;
+  left: 18%;
+  animation: drift 12s linear infinite reverse;
+}
+
+/* Animacao de deslocamento suave das nuvens. */
+@keyframes drift {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-42px);
+  }
+}
+
+/* Corpo base do personagem jogavel. */
+.pet {
+  position: absolute;
+  left: 56px;
+  bottom: 44px;
+  width: 48px;
+  height: 50px;
+  background:
+    radial-gradient(circle at 62% 62%, var(--pet-belly) 0 30%, transparent 31%),
+    linear-gradient(160deg, #f0bf88 0%, var(--pet-main) 52%, #be8450 100%);
+  border: 2px solid var(--pet-shadow);
+  border-radius: 12px 14px 10px 12px;
+  box-shadow: 0 6px 0 rgba(94, 62, 24, 0.32);
+}
+
+/* Orelha adicional para diferenciar visualmente cachorro e gato. */
+.pet-ear {
+  position: absolute;
+  top: -10px;
+  right: 9px;
+  width: 12px;
+  height: 14px;
+  background: #835126;
+  border: 2px solid #6f431d;
+  border-radius: 8px 8px 2px 10px;
+  transform: rotate(18deg);
+}
+
+/* Tremor leve no chao para simular passinhos. */
+.pet.running {
+  animation: pet-run 0.16s infinite alternate;
+}
+
+/* Pequena oscilacao durante a corrida. */
+@keyframes pet-run {
+  0% {
+    transform: translateY(0) rotate(-1deg);
+  }
+  100% {
+    transform: translateY(1.6px) rotate(1deg);
+  }
+}
+
+/* Cabeca base do pet. */
+.pet::before {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 16px;
+  top: -7px;
+  right: 1px;
+  background: linear-gradient(155deg, #f2c99b 0%, var(--pet-main) 70%);
+  border: 2px solid var(--pet-shadow);
+  border-radius: 7px 7px 3px 3px;
+}
+
+/* Olhinho e bochecha rosada para dar expressao. */
+.pet::after {
+  content: "";
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  background: var(--pet-eye);
+  top: 10px;
+  right: 8px;
+  border-radius: 50%;
+  box-shadow: -13px 14px 0 -2px var(--pet-cheek), 2px 1px 0 0 #fff;
+}
+
+/* Cachorro: orelha pendente e tom marrom. */
+.pet.dog {
+  --pet-main: #d5a16e;
+  --pet-shadow: #855428;
+  --pet-belly: #f6dcb8;
+}
+
+.pet.dog::before {
+  box-shadow: -13px 3px 0 -5px #7c4a22;
+}
+
+/* Gato: tom acinzentado e ouvido pontudo. */
+.pet.cat {
+  --pet-main: #b8bfd1;
+  --pet-shadow: #6b7286;
+  --pet-belly: #dfe4ef;
+}
+
+.pet.cat::before {
+  border-radius: 4px 4px 3px 3px;
+}
+
+.pet.cat::after {
+  box-shadow: -13px 14px 0 -2px #ffb4c7, 2px 1px 0 0 #fff;
+}
+
+.pet.cat .pet-ear {
+  width: 15px;
+  height: 15px;
+  top: -12px;
+  right: 6px;
+  background: #cfd4e1;
+  border: 2px solid #6b7286;
+  border-radius: 0;
+  transform: rotate(0deg);
+  clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+  box-shadow: -13px 0 0 0 #cfd4e1, -13px 0 0 2px #6b7286;
+}
+
+/* Obstaculo base (cacto). */
+.obstacle {
+  position: absolute;
+  bottom: 44px;
+  left: 0;
+  width: 24px;
+  height: 42px;
+  background: var(--cactus);
+  border-radius: 3px;
+}
+
+/* Bracos do cacto (partes laterais). */
+.obstacle::before,
+.obstacle::after {
+  content: "";
+  position: absolute;
+  background: var(--cactus);
+  width: 8px;
+  border-radius: 3px;
+}
+
+/* Braco esquerdo. */
+.obstacle::before {
+  height: 16px;
+  left: -6px;
+  top: 15px;
+}
+
+/* Braco direito. */
+.obstacle::after {
+  height: 13px;
+  right: -6px;
+  top: 9px;
+}
+
+/* Overlay de mensagens (inicio e game over). */
+.message {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.65);
+  font-size: clamp(0.65rem, 2.2vw, 1rem);
+  line-height: 1.8;
+}
+
+/* Esconde elementos sem remover do DOM. */
+.hidden {
+  display: none;
+}
+
+/* Texto de instrucoes abaixo da area de jogo. */
+.controls {
+  text-align: center;
+  margin: 14px 2px 2px;
+  line-height: 1.55;
+  font-size: clamp(0.52rem, 1.9vw, 0.76rem);
+}
+
+/* Card lateral com selecao de pet. */
+.pet-picker {
+  background: rgba(255, 255, 255, 0.85);
+  border: 3px solid #ffffff;
+  border-radius: 14px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+}
+
+/* Titulo do painel de escolha. */
+.picker-title {
+  margin: 0 0 6px;
+  font-size: 0.62rem;
+}
+
+/* Opcao clicavel (radio + texto). */
+.picker-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.58rem;
+  cursor: pointer;
+  line-height: 1.4;
+}
+
+/* Input de radio com tamanho um pouco maior para toque. */
+.picker-option input {
+  width: 16px;
+  height: 16px;
+}

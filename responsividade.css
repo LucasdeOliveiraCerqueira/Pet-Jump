@@ -1,0 +1,98 @@
+/* Ajustes para telas medias (tablets). */
+@media (max-width: 860px) {
+  .play-area {
+    grid-template-columns: minmax(0, 1fr) minmax(142px, 32%);
+    gap: 10px;
+  }
+
+  .hud {
+    font-size: clamp(0.54rem, 1.8vw, 0.82rem);
+  }
+
+  .picker-title {
+    font-size: 0.56rem;
+  }
+
+  .picker-option {
+    font-size: 0.52rem;
+  }
+}
+
+/* Ajuste de layout para telas pequenas. */
+@media (max-width: 640px) {
+  .play-area {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .pet-picker {
+    order: -1;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px 12px;
+  }
+
+  .picker-title {
+    width: 100%;
+    margin-bottom: 2px;
+  }
+
+  .game {
+    height: clamp(200px, 52vw, 280px);
+  }
+}
+
+/* Ajuste final para celulares compactos. */
+@media (max-width: 520px) {
+  .hud {
+    flex-wrap: wrap;
+    row-gap: 8px;
+  }
+
+  .game-shell {
+    border-width: 3px;
+    border-radius: 14px;
+  }
+
+  .game {
+    border-width: 2px;
+  }
+
+  .pet {
+    left: 34px;
+    width: 42px;
+    height: 44px;
+  }
+
+  .pet::before {
+    width: 15px;
+    height: 13px;
+    top: -6px;
+  }
+
+  .pet::after {
+    width: 6px;
+    height: 6px;
+    top: 9px;
+    right: 7px;
+  }
+
+  .pet-ear {
+    top: -9px;
+    width: 11px;
+    height: 12px;
+  }
+
+  .pet.cat .pet-ear {
+    width: 12px;
+    height: 12px;
+    right: 7px;
+    box-shadow: -10px 0 0 0 #cfd4e1, -10px 0 0 2px #6b7286;
+  }
+
+  .controls {
+    font-size: 0.5rem;
+  }
+}

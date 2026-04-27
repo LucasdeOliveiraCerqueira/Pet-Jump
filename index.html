@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <!-- Define codificacao para acentos e caracteres especiais. -->
+    <meta charset="UTF-8" />
+    <!-- Garante boa renderizacao em telas menores (celular/tablet). -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Titulo exibido na aba do navegador. -->
+    <title>Pet Jump</title>
+
+    <!-- Otimiza o carregamento da fonte externa. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Fonte em estilo retro para combinar com o jogo. -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Arquivo de estilos principal do jogo. -->
+    <link rel="stylesheet" href="style.css" />
+    <!-- Arquivo exclusivo para regras responsivas. -->
+    <link rel="stylesheet" href="responsividade.css" />
+  </head>
+  <body>
+    <!-- Container geral da interface (placar + area jogavel + controles). -->
+    <main class="game-shell">
+      <!-- Barra superior de pontuacao. -->
+      <header class="hud">
+        <div>Pontos: <span id="score">0</span></div>
+        <div>Recorde: <span id="highScore">0</span></div>
+      </header>
+
+      <!-- Layout lado a lado: jogo + selecao de personagem. -->
+      <div class="play-area">
+        <!-- Area onde o jogo acontece. -->
+        <section id="game" class="game" aria-label="Jogo Pet Jump">
+          <!-- Elementos de fundo decorativos. -->
+          <div class="cloud cloud-1"></div>
+          <div class="cloud cloud-2"></div>
+
+          <!-- Personagem principal controlado pelo jogador. -->
+          <div id="pet" class="pet dog" aria-label="Cachorro">
+            <span class="pet-ear" aria-hidden="true"></span>
+          </div>
+
+          <!-- Mensagens de inicio e game over. -->
+          <div id="message" class="message hidden" aria-live="polite"></div>
+        </section>
+
+        <!-- Painel de selecao do pet. -->
+        <aside class="pet-picker" aria-label="Escolher personagem">
+          <p class="picker-title">Personagem</p>
+          <label class="picker-option">
+            <input type="radio" name="petType" value="dog" checked />
+            Cachorro
+          </label>
+          <label class="picker-option">
+            <input type="radio" name="petType" value="cat" />
+            Gato
+          </label>
+        </aside>
+      </div>
+
+      <!-- Texto de ajuda com os controles. -->
+      <p class="controls">Escolha o animal antes de iniciar. Use Espaco ou Seta para cima para pular.</p>
+    </main>
+
+    <!-- Logica do jogo (fisica, obstaculos, score e colisao). -->
+    <script src="script.js"></script>
+  </body>
+</html>
