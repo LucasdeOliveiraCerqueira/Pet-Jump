@@ -32,6 +32,15 @@ let highScore = Number(localStorage.getItem("petHighScore") || 0);
 let gameOver = false;
 let started = false;
 
+// Detecta se eh dispositivo movel.
+const isMobile = () => {
+  return (
+    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent
+    ) || navigator.maxTouchPoints > 0
+  );
+};
+
 // Vetor com todos os obstaculos atualmente em jogo.
 const obstacles = [];
 
@@ -175,7 +184,12 @@ function restart() {
   // Regera obstaculos e atualiza visual.
   resetObstacles();
   updatePet();
-  showMessage("Escolha o animal e aperte espaco ou seta para cima");
+  
+  // Mensagem diferente para mobile e desktop.
+  const instructionMessage = isMobile()
+    ? "Escolha o animal e toque na tela para pular"
+    : "Escolha o animal e aperte espaco ou seta para cima";
+  showMessage(instructionMessage);
 }
 
 // Testa colisao entre o pet e qualquer obstaculo ativo.
@@ -266,8 +280,11 @@ function loop() {
       highScoreEl.textContent = highScore;
     }
 
-    // Exibe instrucoes para reiniciar.
-    showMessage("Game Over - escolha o animal e aperte espaco ou seta para cima");
+    // Exibe instrucoes para reiniciar (diferente para mobile e desktop).
+    const gameOverMessage = isMobile()
+      ? "Game Over - escolha o animal e toque para continuar"
+      : "Game Over - escolha o animal e aperte espaco ou seta para cima";
+    showMessage(gameOverMessage);
   }
 
   // Atualiza posicao/animacao do pet e agenda proximo frame.
@@ -292,8 +309,14 @@ function handleInput(event) {
   jump();
 }
 
-// Teclado no desktop.
-window.addEventListener("keydown", handleInput);
+// Controles: teclado no desktop, toque no mobile.
+if (isMobile()) {
+  // Toque na tela para pular em dispositivos moveis.
+  game.addEventListener("touchstart", handleInput);
+} else {
+  // Teclado no desktop.
+  window.addEventListener("keydown", handleInput);
+}
 
 // Em resize, reorganiza os obstaculos para manter proporcao.
 window.addEventListener("resize", () => {
@@ -312,7 +335,12 @@ resetObstacles();
 setPetType("dog");
 setPetSelectorEnabled(true);
 updatePet();
-showMessage("Escolha o animal e aperte espaco ou seta para cima");
+
+// Mensagem inicial diferente para mobile e desktop.
+const initialMessage = isMobile()
+  ? "Escolha o animal e toque na tela para pular"
+  : "Escolha o animal e aperte espaco ou seta para cima";
+showMessage(initialMessage);
 
 // Inicia o loop de renderizacao.
 requestAnimationFrame(loop);
